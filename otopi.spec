@@ -19,11 +19,11 @@
 
 Summary:	oVirt Task Oriented Pluggable Installer/Implementation (%{name})
 Name:		otopi
-Version:	1.2.0
-Release:	0.0.master%{?release_suffix}%{?dist}
+Version:	1.1.1
+Release:	1
 License:	LGPLv2+
 URL:		http://www.ovirt.org
-Source:		http://resources.ovirt.org/releases/3.3/src/%{name}-1.2.0_master.tar.gz
+Source:		http://resources.ovirt.org/releases/3.3/src/%{name}-%{version}.tar.gz
 Group:		Development/Libraries
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -68,26 +68,30 @@ Group:		Documentation
 %description javadoc
 This package contains the API documentation for %{name}.
 
-%package devel
-Summary:	%{name} development components
-Requires:	%{name}-java = %{version}-%{release}
-%description devel
-Development environment for %{name}.
+%package devtools
+Summary:	%{name} development tools
+Requires:	%{name} = %{version}-%{release}
+Obsoletes:	%{name}-devel < 1.1.1-1
+Provides:	%{name}-devel = %{version}-%{release}
+%description devtools
+Development tools for %{name}.
 
 %prep
-%setup -q -n %{name}-1.2.0_master
+%setup -q -n %{name}-%{version}
 
 %build
 %configure \
 	--docdir="%{_docdir}/%{name}-%{version}" \
 	--disable-python-syntax-check \
 	--enable-java-sdk \
+	--disable-java-sdk-compile \
 	--with-local-version="%{name}-%{version}-%{release}" \
-	--disable-java-sdk-compile
+	%{?conf}
 make %{?_smp_mflags}
 
 cd src/java
 %mvn_build
+cd ../..
 
 %install
 rm -rf "%{buildroot}"
@@ -95,6 +99,7 @@ make %{?_smp_mflags} install DESTDIR="%{buildroot}"
 
 cd src/java
 %mvn_install
+cd ../..
 
 install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 
@@ -113,14 +118,19 @@ install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 %{python_sitelib}/%{name}/
 
 %files java -f src/java/.mfiles
+%dir %{_javadir}/%{name}
 
 %files javadoc -f src/java/.mfiles-javadoc
 
-%files devel
+%files devtools
 %{_datadir}/%{name}/%{name}-bundle
 %{python_sitelib}/%{name}/codegen/
 
 %changelog
+* Tue Sep 17 2013 Alon Bar-LEv <alonbl@redhat.com> - 1.1.1-1
+- rename devel->devtools
+- own %{_javadir}/%{name}
+
 * Mon Aug 26 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.0-1
 - Release.
 
