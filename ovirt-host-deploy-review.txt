@@ -1,0 +1,238 @@
+
+Package Review
+==============
+
+Legend:
+[x] = Pass, [!] = Fail, [-] = Not applicable, [?] = Not evaluated
+[ ] = Manual review needed
+
+
+Issues:
+=======
+- Fully versioned dependency in subpackages, if present.
+  Note: Missing: Requires: %{name} = %{version}-%{release} in ovirt-host-
+  deploy-java
+  See: http://fedoraproject.org/wiki/Packaging/Guidelines#RequiringBasePackage
+
+
+===== MUST items =====
+
+Generic:
+[ ]: Package is licensed with an open-source compatible license and meets
+     other legal requirements as defined in the legal section of Packaging
+     Guidelines.
+[ ]: Package contains no bundled libraries without FPC exception.
+[ ]: Changelog in prescribed format.
+[ ]: Sources contain only permissible code or content.
+[ ]: Package contains desktop file if it is a GUI application.
+[ ]: Development files must be in a -devel package
+[ ]: Package requires other packages for directories it uses.
+[ ]: Package uses nothing in %doc for runtime.
+[ ]: Package is not known to require ExcludeArch.
+[ ]: Fully versioned dependency in subpackages, if present.
+     Note: No Requires: %{name}%{?_isa} = %{version}-%{release} in ovirt-host-
+     deploy-java , ovirt-host-deploy-javadoc
+[ ]: Package complies to the Packaging Guidelines
+[ ]: License field in the package spec file matches the actual license.
+     Note: Checking patched sources after %prep for licenses. Licenses found:
+     "LGPL (v2.1 or later)", "Unknown or generated". 1 files have unknown
+     license. Detailed output of licensecheck in /home/user1/ovirt-host-
+     deploy/licensecheck.txt
+[ ]: License file installed when any subpackage combination is installed.
+[ ]: Package consistently uses macro is (instead of hard-coded directory
+     names).
+[ ]: Package is named according to the Package Naming Guidelines.
+[ ]: Package does not generate any conflict.
+[ ]: Package obeys FHS, except libexecdir and /usr/target.
+[ ]: If the package is a rename of another package, proper Obsoletes and
+     Provides are present.
+[ ]: Package must own all directories that it creates.
+[ ]: Package does not own files or directories owned by other packages.
+[ ]: Requires correct, justified where necessary.
+[ ]: Spec file is legible and written in American English.
+[ ]: Package contains systemd file(s) if in need.
+[ ]: Large documentation must go in a -doc subpackage.
+     Note: Documentation size is 40960 bytes in 4 files.
+[x]: All build dependencies are listed in BuildRequires, except for any that
+     are listed in the exceptions section of Packaging Guidelines.
+[x]: Package does not run rm -rf %{buildroot} (or $RPM_BUILD_ROOT) at the
+     beginning of %install.
+[x]: Each %files section contains %defattr if rpm < 4.4
+[x]: Macros in Summary, %description expandable at SRPM build time.
+[x]: Package does not contain duplicates in %files.
+[x]: Permissions on files are set properly.
+[x]: If (and only if) the source package includes the text of the license(s)
+     in its own file, then that file, containing the text of the license(s)
+     for the package is included in %doc.
+[x]: Package use %makeinstall only when make install' ' DESTDIR=... doesn't
+     work.
+[x]: Package is named using only allowed ASCII characters.
+[x]: Package do not use a name that already exist
+[x]: Package is not relocatable.
+[x]: Sources used to build the package match the upstream source, as provided
+     in the spec URL.
+[x]: Spec file name must match the spec package %{name}, in the format
+     %{name}.spec.
+[x]: File names are valid UTF-8.
+[x]: Packages must not store files under /srv, /opt or /usr/local
+[x]: Package successfully compiles and builds into binary rpms on at least one
+     supported primary architecture.
+[x]: Package installs properly.
+[x]: Rpmlint is run on all rpms the build produces.
+     Note: There are rpmlint messages (see attachment).
+
+Java:
+[x]: Packages have proper BuildRequires/Requires on jpackage-utils
+     Note: Maven packages do not need to (Build)Require jpackage-utils. It is
+     pulled in by maven-local
+[x]: Javadoc documentation files are generated and included in -javadoc
+     subpackage
+[x]: Javadoc subpackages should not have Requires: jpackage-utils
+[x]: Javadocs are placed in %{_javadocdir}/%{name} (no -%{version} symlink)
+[x]: Bundled jar/class files should be removed before build
+
+Maven:
+[ ]: If package contains pom.xml files install it (including depmaps) even
+     when building with ant
+[x]: Pom files have correct Maven mapping
+[x]: Maven packages should use new style packaging
+[x]: Old add_to_maven_depmap macro is not being used
+[x]: Packages DOES NOT have Requires(post) and Requires(postun) on jpackage-
+     utils for %update_maven_depmap macro
+[x]: Package DOES NOT use %update_maven_depmap in %post/%postun
+[x]: Packages use %{_mavenpomdir} instead of %{_datadir}/maven2/poms
+
+Python:
+[ ]: Python eggs must not download any dependencies during the build process.
+[ ]: A package which is used by another package via an egg interface should
+     provide egg info.
+[ ]: Package meets the Packaging Guidelines::Python
+[x]: Package contains BR: python2-devel or python3-devel
+[x]: Binary eggs must be removed in %prep
+
+===== SHOULD items =====
+
+Generic:
+[!]: Sources can be downloaded from URI in Source: tag
+     Note: Could not download Source0
+[ ]: Buildroot is not present
+     Note: Buildroot: present but not needed
+[ ]: If the source package does not include license text(s) as a separate file
+     from upstream, the packager SHOULD query upstream to include it.
+[ ]: Final provides and requires are sane (see attachments).
+[ ]: Package functions as described.
+[ ]: Latest version is packaged.
+[ ]: Package does not include license text files separate from upstream.
+[ ]: SourceX tarball generation or download is documented.
+     Note: Package contains tarball without URL, check comments
+[ ]: Description and summary sections in the package spec file contains
+     translations for supported Non-English languages, if available.
+[ ]: Package should compile and build into binary rpms on all supported
+     architectures.
+[ ]: %check is present and all tests pass.
+[ ]: Packages should try to preserve timestamps of original installed files.
+[x]: Packager, Vendor, PreReq, Copyright tags should not be in spec file
+[x]: Reviewer should test that the package builds in mock.
+[x]: Package has no %clean section with rm -rf %{buildroot} (or
+     $RPM_BUILD_ROOT)
+[x]: Dist tag is present.
+[x]: No file requires outside of /etc, /bin, /sbin, /usr/bin, /usr/sbin.
+[x]: Uses parallel make.
+[x]: SourceX is a working URL.
+[x]: Spec use %global instead of %define.
+
+Java:
+[ ]: Package uses upstream build method (ant/maven/etc.)
+[x]: Packages are noarch unless they use JNI
+
+===== EXTRA items =====
+
+Generic:
+[x]: Large data in /usr/share should live in a noarch subpackage if package is
+     arched.
+[x]: Rpmlint is run on all installed packages.
+     Note: There are rpmlint messages (see attachment).
+
+
+Rpmlint
+-------
+Checking: ovirt-host-deploy-1.1.1-1.fc19.noarch.rpm
+          ovirt-host-deploy-java-1.1.1-1.fc19.noarch.rpm
+          ovirt-host-deploy-javadoc-1.1.1-1.fc19.noarch.rpm
+ovirt-host-deploy.noarch: W: summary-not-capitalized C oVirt host deploy tool
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/otopi-plugins/otopi ../../../otopi/plugins/otopi
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/interface-3/.bundled
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/interface-3/.bundled
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/otopi ../../../sbin/otopi
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/hooks.d/.keep
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/hooks.d/.keep
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/packages.d/.keep
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/packages.d/.keep
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/pythonlib/otopi ../../../../lib/python2.7/site-packages/otopi
+ovirt-host-deploy.noarch: W: no-manual-page-for-binary ovirt-host-deploy
+ovirt-host-deploy-java.noarch: W: summary-not-capitalized C ovirt-host-deploy java support
+ovirt-host-deploy-java.noarch: W: no-documentation
+ovirt-host-deploy-javadoc.noarch: W: spelling-error Summary(en_US) Javadocs -> Java docs, Java-docs, Avocados
+3 packages and 0 specfiles checked; 3 errors, 11 warnings.
+
+
+
+
+Rpmlint (installed packages)
+----------------------------
+# rpmlint ovirt-host-deploy ovirt-host-deploy-java ovirt-host-deploy-javadoc
+ovirt-host-deploy.noarch: W: summary-not-capitalized C oVirt host deploy tool
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/otopi-plugins/otopi ../../../otopi/plugins/otopi
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/interface-3/.bundled
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/interface-3/.bundled
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/otopi ../../../sbin/otopi
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/hooks.d/.keep
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/hooks.d/.keep
+ovirt-host-deploy.noarch: W: hidden-file-or-dir /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/packages.d/.keep
+ovirt-host-deploy.noarch: E: zero-length /usr/share/ovirt-host-deploy/plugins/ovirt-host-deploy/vdsmhooks/packages.d/.keep
+ovirt-host-deploy.noarch: W: dangling-relative-symlink /usr/share/ovirt-host-deploy/interface-3/pythonlib/otopi ../../../../lib/python2.7/site-packages/otopi
+ovirt-host-deploy.noarch: W: no-manual-page-for-binary ovirt-host-deploy
+ovirt-host-deploy-java.noarch: W: summary-not-capitalized C ovirt-host-deploy java support
+ovirt-host-deploy-java.noarch: W: no-documentation
+ovirt-host-deploy-javadoc.noarch: W: spelling-error Summary(en_US) Javadocs -> Java docs, Java-docs, Avocados
+3 packages and 0 specfiles checked; 3 errors, 11 warnings.
+# echo 'rpmlint-done:'
+
+
+
+Requires
+--------
+ovirt-host-deploy (rpmlib, GLIBC filtered):
+    /bin/sh
+    otopi
+    python
+    python(abi)
+
+ovirt-host-deploy-java (rpmlib, GLIBC filtered):
+    java
+    jpackage-utils
+    otopi-java
+    ovirt-host-deploy
+
+ovirt-host-deploy-javadoc (rpmlib, GLIBC filtered):
+    jpackage-utils
+
+
+
+Provides
+--------
+ovirt-host-deploy:
+    ovirt-host-deploy
+
+ovirt-host-deploy-java:
+    mvn(org.ovirt.ovirt-host-deploy:ovirt-host-deploy)
+    ovirt-host-deploy-java
+
+ovirt-host-deploy-javadoc:
+    ovirt-host-deploy-javadoc
+
+
+
+Generated by fedora-review 0.4.1 (b2e211f) last change: 2013-04-29
+Buildroot used: fedora-19-x86_64
+Command line :/bin/fedora-review -rn /home/user1/rpmbuild/SRPMS/ovirt-host-deploy-1.1.1-1.fc19.src.rpm
