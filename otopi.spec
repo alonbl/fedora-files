@@ -20,7 +20,7 @@
 Summary:	oVirt Task Oriented Pluggable Installer/Implementation (%{name})
 Name:		otopi
 Version:	1.1.1
-Release:	1
+Release:	2%{?dist}
 License:	LGPLv2+
 URL:		http://www.ovirt.org
 Source:		http://resources.ovirt.org/releases/3.3/src/%{name}-%{version}.tar.gz
@@ -107,6 +107,7 @@ install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/plugins
 %dir %{_sysconfdir}/%{name}.conf.d
+%dir %{python_sitelib}/%{name}
 %doc AUTHORS
 %doc COPYING
 %doc README
@@ -115,7 +116,7 @@ install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 %doc README.environment
 %{_datadir}/%{name}/plugins/%{name}/
 %{_sbindir}/%{name}
-%{python_sitelib}/%{name}/
+%{python_sitelib}/%{name}/*.py*
 
 %files java -f src/java/.mfiles
 %dir %{_javadir}/%{name}
@@ -127,9 +128,13 @@ install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 %{python_sitelib}/%{name}/codegen/
 
 %changelog
-* Tue Sep 17 2013 Alon Bar-LEv <alonbl@redhat.com> - 1.1.1-1
+* Wed Sep 18 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.1-2
+- re-add dist to Release.
+- exclude codegen from main package.
+
+* Tue Sep 17 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.1-1
 - rename devel->devtools
-- own %{_javadir}/%{name}
+- own _javadir/name
 
 * Mon Aug 26 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.0-1
 - Release.
