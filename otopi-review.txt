@@ -1,4 +1,21 @@
 
+This is a review *template*. Besides handling the [ ]-marked tests you are
+also supposed to fix the template before pasting into bugzilla:
+- Add issues you find to the list of issues on top. If there isn't such
+  a list, create one.
+- Add your own remarks to the template checks.
+- Add new lines marked [!] or [?] when you discover new things not
+  listed by fedora-review.
+- Change or remove any text in the template which is plain wrong. In this
+  case you could also file a bug against fedora-review
+- Remove the "[ ] Manual check required", you will not have any such lines
+  in what you paste.
+- Remove attachments which you deem not really useful (the rpmlint
+  ones are mandatory, though)
+- Remove this text
+
+
+
 Package Review
 ==============
 
@@ -7,13 +24,6 @@ Legend:
 [ ] = Manual review needed
 
 
-Issues:
-=======
-- Fully versioned dependency in subpackages, if present.
-  Note: Missing: Requires: %{name} = %{version}-%{release} in otopi-java,
-  otopi-devtools
-  See: http://fedoraproject.org/wiki/Packaging/Guidelines#RequiringBasePackage
-
 
 ===== MUST items =====
 
@@ -21,48 +31,51 @@ Generic:
 [ ]: Package is licensed with an open-source compatible license and meets
      other legal requirements as defined in the legal section of Packaging
      Guidelines.
-[ ]: Package contains no bundled libraries without FPC exception.
-[ ]: Changelog in prescribed format.
-[ ]: Sources contain only permissible code or content.
-[ ]: Package contains desktop file if it is a GUI application.
-[ ]: Development files must be in a -devel package
-[ ]: Package requires other packages for directories it uses.
-[ ]: Package uses nothing in %doc for runtime.
-[ ]: Package is not known to require ExcludeArch.
-[ ]: Fully versioned dependency in subpackages, if present.
-     Note: No Requires: %{name}%{?_isa} = %{version}-%{release} in otopi-java
-     , otopi-javadoc , otopi-devtools
-[ ]: Package complies to the Packaging Guidelines
 [ ]: License field in the package spec file matches the actual license.
      Note: Checking patched sources after %prep for licenses. Licenses found:
      "LGPL (v2.1 or later)". Detailed output of licensecheck in
      /home/user1/otopi/licensecheck.txt
 [ ]: License file installed when any subpackage combination is installed.
-[ ]: Package consistently uses macro is (instead of hard-coded directory
-     names).
+[ ]: Package contains no bundled libraries without FPC exception.
+[ ]: Changelog in prescribed format.
+[ ]: Sources contain only permissible code or content.
+[ ]: Package contains desktop file if it is a GUI application.
+[ ]: Development files must be in a -devel package
+[ ]: Package uses nothing in %doc for runtime.
+[ ]: Package consistently uses macros (instead of hard-coded directory names).
 [ ]: Package is named according to the Package Naming Guidelines.
 [ ]: Package does not generate any conflict.
 [ ]: Package obeys FHS, except libexecdir and /usr/target.
 [ ]: If the package is a rename of another package, proper Obsoletes and
      Provides are present.
-[ ]: Package must own all directories that it creates.
-[ ]: Package does not own files or directories owned by other packages.
 [ ]: Requires correct, justified where necessary.
 [ ]: Spec file is legible and written in American English.
 [ ]: Package contains systemd file(s) if in need.
-[ ]: Large documentation must go in a -doc subpackage.
+[ ]: Package is not known to require an ExcludeArch tag.
+[ ]: Large documentation must go in a -doc subpackage. Large could be size
+     (~1MB) or number of files.
      Note: Documentation size is 51200 bytes in 6 files.
+[ ]: Package complies to the Packaging Guidelines
+[x]: Package successfully compiles and builds into binary rpms on at least one
+     supported primary architecture.
+[x]: Package installs properly.
+[x]: Rpmlint is run on all rpms the build produces.
+     Note: There are rpmlint messages (see attachment).
+[x]: If (and only if) the source package includes the text of the license(s)
+     in its own file, then that file, containing the text of the license(s)
+     for the package is included in %doc.
+[x]: Package requires other packages for directories it uses.
+[x]: Package must own all directories that it creates.
+[x]: Package does not own files or directories owned by other packages.
 [x]: All build dependencies are listed in BuildRequires, except for any that
      are listed in the exceptions section of Packaging Guidelines.
+[x]: Package uses either %{buildroot} or $RPM_BUILD_ROOT
 [x]: Package does not run rm -rf %{buildroot} (or $RPM_BUILD_ROOT) at the
      beginning of %install.
 [x]: Each %files section contains %defattr if rpm < 4.4
 [x]: Macros in Summary, %description expandable at SRPM build time.
 [x]: Package does not contain duplicates in %files.
 [x]: Permissions on files are set properly.
-[x]: If (and only if) the source package includes the text of the license(s)
-     in its own file, then that file, containing the text of the license(s)
-     for the package is included in %doc.
 [x]: Package use %makeinstall only when make install' ' DESTDIR=... doesn't
      work.
 [x]: Package is named using only allowed ASCII characters.
@@ -74,11 +87,6 @@ Generic:
      %{name}.spec.
 [x]: File names are valid UTF-8.
 [x]: Packages must not store files under /srv, /opt or /usr/local
-[x]: Package successfully compiles and builds into binary rpms on at least one
-     supported primary architecture.
-[x]: Package installs properly.
-[x]: Rpmlint is run on all rpms the build produces.
-     Note: There are rpmlint messages (see attachment).
 
 Java:
 [x]: Packages have proper BuildRequires/Requires on jpackage-utils
@@ -117,6 +125,9 @@ Generic:
 [ ]: If the source package does not include license text(s) as a separate file
      from upstream, the packager SHOULD query upstream to include it.
 [ ]: Final provides and requires are sane (see attachments).
+[ ]: Fully versioned dependency in subpackages if applicable.
+     Note: No Requires: %{name}%{?_isa} = %{version}-%{release} in otopi-
+     javadoc
 [ ]: Package functions as described.
 [ ]: Latest version is packaged.
 [ ]: Package does not include license text files separate from upstream.
@@ -131,12 +142,12 @@ Generic:
 [x]: Reviewer should test that the package builds in mock.
 [x]: Package has no %clean section with rm -rf %{buildroot} (or
      $RPM_BUILD_ROOT)
-[x]: Dist tag is present.
+[x]: Dist tag is present (not strictly required in GL).
 [x]: No file requires outside of /etc, /bin, /sbin, /usr/bin, /usr/sbin.
-[x]: Uses parallel make.
+[x]: Uses parallel make %{?_smp_mflags} macro.
 [x]: SourceX tarball generation or download is documented.
 [x]: SourceX is a working URL.
-[x]: Spec use %global instead of %define.
+[x]: Spec use %global instead of %define unless justified.
 
 Java:
 [ ]: Package uses upstream build method (ant/maven/etc.)
@@ -145,10 +156,10 @@ Java:
 ===== EXTRA items =====
 
 Generic:
-[x]: Large data in /usr/share should live in a noarch subpackage if package is
-     arched.
 [x]: Rpmlint is run on all installed packages.
      Note: There are rpmlint messages (see attachment).
+[x]: Large data in /usr/share should live in a noarch subpackage if package is
+     arched.
 
 
 Rpmlint
@@ -157,6 +168,7 @@ Checking: otopi-1.1.1-2.fc19.noarch.rpm
           otopi-java-1.1.1-2.fc19.noarch.rpm
           otopi-javadoc-1.1.1-2.fc19.noarch.rpm
           otopi-devtools-1.1.1-2.fc19.noarch.rpm
+          otopi-1.1.1-2.fc19.src.rpm
 otopi.noarch: W: spelling-error Summary(en_US) oVirt -> overt
 otopi.noarch: W: summary-not-capitalized C oVirt Task Oriented Pluggable Installer/Implementation (otopi)
 otopi.noarch: E: non-executable-script /usr/lib/python2.7/site-packages/otopi/miniyum.py 0644L /usr/bin/python
@@ -166,7 +178,9 @@ otopi-java.noarch: W: no-documentation
 otopi-javadoc.noarch: W: spelling-error Summary(en_US) Javadocs -> Java docs, Java-docs, Avocados
 otopi-devtools.noarch: W: summary-not-capitalized C otopi development tools
 otopi-devtools.noarch: W: no-documentation
-4 packages and 0 specfiles checked; 1 errors, 8 warnings.
+otopi.src: W: spelling-error Summary(en_US) oVirt -> overt
+otopi.src: W: summary-not-capitalized C oVirt Task Oriented Pluggable Installer/Implementation (otopi)
+5 packages and 0 specfiles checked; 1 errors, 10 warnings.
 
 
 
@@ -236,6 +250,9 @@ http://resources.ovirt.org/releases/3.3/src/otopi-1.1.1.tar.gz :
   CHECKSUM(SHA256) upstream package : 1286dba1c5828204208924030e475449ac7fcd4ba0784d461af8af03be75369f
 
 
-Generated by fedora-review 0.4.1 (b2e211f) last change: 2013-04-29
-Buildroot used: fedora-19-x86_64
+Generated by fedora-review 0.5.0 (920221d) last change: 2013-08-30
 Command line :/bin/fedora-review -rn /home/user1/rpmbuild/SRPMS/otopi-1.1.1-2.fc19.src.rpm
+Buildroot used: fedora-19-x86_64
+Active plugins: Generic, Shell-api, Python, Java
+Disabled plugins: C/C++, SugarActivity, Perl, R, PHP, Ruby
+Disabled flags: EPEL5, EXARCH, DISTTAG
