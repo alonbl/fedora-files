@@ -22,10 +22,10 @@
 Summary:	oVirt host deploy tool
 Name:		ovirt-host-deploy
 Version:	1.1.1
-Release:	1%{?dist}
+Release:	2%{?dist}
 License:	LGPLv2+
 URL:		http://www.ovirt.org
-Source:		http://resources.ovirt.org/releases/stable/3.3/%{name}-%{version}.tar.gz
+Source:		http://resources.ovirt.org/releases/3.3/src/%{name}-%{version}.tar.gz
 Group:		Applications/System
 
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
@@ -120,6 +120,9 @@ install -d -m 755 "%{buildroot}%{_sysconfdir}/%{name}.conf.d"
 %files javadoc -f src/java/.mfiles-javadoc
 
 %changelog
+* Thu Sep 19 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.1-2
+- Fix source URL.
+
 * Wed Sep 18 2013 Alon Bar-Lev <alonbl@redhat.com> - 1.1.1-1
 - Release.
 
